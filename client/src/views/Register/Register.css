@@ -1,0 +1,6 @@
+.glow {
+	text-shadow: 0 0 1px #ea7c55, 0 0 4px #ea7c55;
+}
+.border-glow {
+	box-shadow: 0 0 1px #ea7c55, 0 0 4px #ea7c55;
+}

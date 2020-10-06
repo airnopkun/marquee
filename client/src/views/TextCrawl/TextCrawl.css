@@ -1,0 +1,44 @@
+pre{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+#titles
+{
+	position: absolute;
+	width: 100%;
+	height: 50em;
+	bottom: 0;
+	left: 25%;
+	margin-left: -9em;
+	font-size: 300%;
+	font-weight: bold;
+	text-align: justify;
+	transform-origin: 50% 100%;
+	transform: perspective(300px) rotateX(10deg);
+	overflow: hidden;
+}
+
+#titles:after
+{
+	position: absolute;
+	content: ' ';
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 60%;
+	background-image: linear-gradient(rgba(0,0,0,1) 0%, transparent 100%);
+	pointer-events: none;
+}
+
+#titlecontent
+{
+	position: absolute;
+	top: 100%;
+	animation: scroll 150s linear 1s infinite;
+}
+
+@keyframes scroll {
+	0% { top: 100%; }
+	100% { top: -1170%; }
+}
