@@ -41,7 +41,8 @@ def conversion():
             p = p + str(l)[2:-5] + ' '
     paragraphs.append(p)
     print(len(paragraphs))
-    return jsonify(paragraphs)
+    return paragraphs
+    #return jsonify(paragraphs)
 
 
 

@@ -24,22 +24,23 @@ export default (props) => {
 		// })
 		// .then(response => response.json())
 		axios.get(`http://localhost:3001/profile/${userID}`)
-		.then(response => {
-			console.log(response)
-			if(response === 'user library empty' || response === 'error getting user library') {
-				//books should be empty array
-				console.log(books)
-			}
-			else {
-				const userBooks = []
-				response.forEach(bk => {
-					const content = JSON.parse(bk.content);
-					console.log(content);
-					userBooks.push({title: bk.title, content: content});
-				})
-			setBooks(userBooks);
-			}
-		})
+			.then(response => {
+				console.log(response)
+				if(response === 'user library empty' || response === 'error getting user library') {
+					//books should be empty array
+					console.log(books)
+				}
+				else {
+					const userBooks = []
+					response.data.forEach(bk => {
+						// const content = JSON.parse(bk.content);
+						const content = bk.content;
+						console.log(content);
+						userBooks.push({title: bk.title, content: content});
+					})
+				setBooks(userBooks);
+				}
+			})
 	}, [books])
 
 	const handleFiles = (fileInput) => {
