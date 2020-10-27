@@ -2,10 +2,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
 
-#Init app
+# Init app
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"/conversion": {"origins": "*"}})
+# CORS(app)
 
 @app.route('/', methods=['GET'])
 def hello():
@@ -17,17 +18,14 @@ def hello():
 @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def conversion():
 
-    print(request.files)
+    print("request: ", request)
+    print("request.files: ", request.files)
     #request.files[''].save("./newfile")
     #file = open("./newfile", "r")
 
     file = request.files['']
-    print(file)
+    print("file: ", file)
     paragraphs = []
-    '''
-    def paragraph(str):
-        return '<pre>{\`\n' + str + '\n\`}</pre>\n'
-    '''
     p = ''
     converted = ''
     for l in file:
@@ -41,8 +39,7 @@ def conversion():
             p = p + str(l)[2:-5] + ' '
     paragraphs.append(p)
     print(len(paragraphs))
-    return paragraphs
-    #return jsonify(paragraphs)
+    return jsonify(body=paragraphs)
 
 
 

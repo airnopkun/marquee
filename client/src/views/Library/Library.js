@@ -26,12 +26,13 @@ export default (props) => {
 		axios.get(`http://localhost:3001/profile/${userID}`)
 			.then(response => {
 				console.log(response)
-				if(response === 'user library empty' || response === 'error getting user library') {
+				if(response.data === 'user library empty' || response.data === 'error getting user library') {
 					//books should be empty array
 					console.log(books)
 				}
 				else {
 					const userBooks = []
+					console.log(response);
 					response.data.forEach(bk => {
 						// const content = JSON.parse(bk.content);
 						const content = bk.content;
@@ -49,60 +50,69 @@ export default (props) => {
 		const formData = new FormData();
 		formData.append('', file);
 
-		fetch('http://localhost:5000/conversion', {
-			mode: 'cors',
-			method: 'post',
+		// fetch('http://localhost:5000/conversion', {
+		// 	mode: 'cors',
+		// 	method: 'post',
+		// 	headers: {
+		// 		'Accept': 'application/json',
+		// 		'Access-Control-Allow-Origin': 'http://localhost:3000'
+		// 	},
+		// 	body: formData
+		// })
+		axios.post('http://localhost:5000/conversion', formData, {
 			headers: {
-				'Accept': 'application/json',
-				'Access-Control-Allow-Origin': 'http://localhost:3000'
-			},
-			body: formData
+				'Content-Type': 'multipart/form-data'
+			}
 		})
 			.then(response => {
-				const reader = response.body.getReader();
-				return new ReadableStream({
-					start(controller) {
-						return pump();
-						function pump() {
-							return reader.read().then(({ done, value }) => {
-								// When no more data needs to be consumed, close the stream
-								if (done) {
-									controller.close();
-									return;
-								}
-								// Enqueue the next data chunk into our target stream
-								controller.enqueue(value);
-								return pump();
-							});
-						}
-					}
-				})
+				const paragraphs = response.data.body;
+				axios.post('http://localhost:3001/addbook')
 			})
-			.then(stream => new Response(stream))
-				.then(response => response.blob())
-					.then(blob => {
-						blob.text()
-							.then(text => {
-								let content = text.slice(1, -1);
-								let contentArr = content.split(`\\\\r\\\\n'",`);
-								for(let i=0; i<contentArr.length; i++){
-									contentArr[i] = contentArr[i].slice(5, contentArr[i].length);
-								}
-								console.log(content);
-								console.log(contentArr);
-								fetch('http://localhost:3001/addbook', {
-									method: 'post',
-									headers: {'Content-Type': 'application/json'},
-									body: JSON.stringify({
-										user_id: userID,
-										title: title,
-										content: contentArr,
-										author: ""
-									})
-								}).then(book => setBooks([...books, book]))
-									.catch(err => console.log(err))
-							})
-					})
+			// .then(response => {
+			// 	const reader = response.data.body.getReader();
+			// 	return new ReadableStream({
+			// 		start(controller) {
+			// 			return pump();
+			// 			function pump() {
+			// 				return reader.read().then(({ done, value }) => {
+			// 					// When no more data needs to be consumed, close the stream
+			// 					if (done) {
+			// 						controller.close();
+			// 						return;
+			// 					}
+			// 					// Enqueue the next data chunk into our target stream
+			// 					controller.enqueue(value);
+			// 					return pump();
+			// 				});
+			// 			}
+			// 		}
+			// 	})
+			// })
+			// .then(stream => new Response(stream))
+			// 	.then(response => response.blob())
+			// 		.then(blob => {
+			// 			blob.text()
+			// 				.then(text => {
+			// 					let content = text.slice(1, -1);
+			// 					let contentArr = content.split(`\\\\r\\\\n'",`);
+			// 					for(let i=0; i<contentArr.length; i++){
+			// 						contentArr[i] = contentArr[i].slice(5, contentArr[i].length);
+			// 					}
+			// 					console.log(content);
+			// 					console.log(contentArr);
+			// 					fetch('http://localhost:3001/addbook', {
+			// 						method: 'post',
+			// 						headers: {'Content-Type': 'application/json'},
+			// 						body: JSON.stringify({
+			// 							user_id: userID,
+			// 							title: title,
+			// 							content: contentArr,
+			// 							author: ""
+			// 						})
+			// 					}).then(book => setBooks([...books, book]))
+			// 						.catch(err => console.log(err))
+			// 				})
+			// 		})
 		}
 	const openModal = () => {
 		modalRef.current.openModal()
