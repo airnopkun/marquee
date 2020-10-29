@@ -19,8 +19,10 @@ const { User } = require('./models');
 const app = express();
 
 
-app.use(bodyParser.json({limit: '50mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+// app.use(bodyParser.json({limit: '50mb', extended: true}));
+app.use(bodyParser.json({extended: true}));
+// app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 
@@ -117,19 +119,21 @@ app.get('/profile/:user_id', (req, res) => {
 });
 
 app.post('/addbook', (req, res) => {
-	const { user_id, title, content, author } = req.body;
-	db('books')
-		.insert({
-	  		user_id: user_id,
-	  		title: title,
-	  		content: content,
-	  		author: author,
-			// created_at: new Date().getTime(),
-	  		// updated_at: new Date().getTime()
-	  	}).then(book => {
-	  		res.json(book);
-	  	})
-	  	.catch(err => res.status(400).json(err))
+	console.log("req: \n", req)
+	console.log("req.body: \n", req.body)
+	// const { user_id, title, content, author } = req.body;
+	// db('books')
+	// 	.insert({
+	//   		user_id: user_id,
+	//   		title: title,
+	//   		content: content,
+	//   		author: author,
+	// 		// created_at: new Date().getTime(),
+	//   		// updated_at: new Date().getTime()
+	//   	}).then(book => {
+	//   		res.json(book);
+	//   	})
+	//   	.catch(err => res.status(400).json(err))
 });
 
 app.delete('/deletebook/', (req, res) => {

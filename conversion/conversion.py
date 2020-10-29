@@ -30,7 +30,7 @@ def conversion():
     converted = ''
     for l in file:
         stripped_line = l.strip()
-        print(stripped_line)
+        # print(stripped_line)
         if stripped_line == bytes("", 'utf-8'):
             if p:
                paragraphs.append(p)
@@ -38,7 +38,7 @@ def conversion():
         else:
             p = p + str(l)[2:-5] + ' '
     paragraphs.append(p)
-    print(len(paragraphs))
+    # print(len(paragraphs))
     return jsonify(body=paragraphs)
 
 

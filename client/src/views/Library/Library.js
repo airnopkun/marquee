@@ -66,7 +66,26 @@ export default (props) => {
 		})
 			.then(response => {
 				const paragraphs = response.data.body;
-				axios.post('http://localhost:3001/addbook')
+				const bookForm = new FormData();
+				bookForm.append('user_id', userID);
+				bookForm.append('title', title);
+				paragraphs.forEach((p) => {
+					bookForm.append('content', p)
+				})
+				// bookForm.append('content', paragraphs);
+				bookForm.append('author', "")
+				console.log(paragraphs)
+				axios.post('http://localhost:3001/addbook', bookForm)
+				// axios({
+				// 	method: 'post',
+				// 	url: 'http://localhost:3001/addbook',
+				// 	data: {
+				// 		user_id: userID,
+				// 		title: title,
+				// 		content: paragraphs,
+				// 		author: ""
+				// 	}
+				// })
 			})
 			// .then(response => {
 			// 	const reader = response.data.body.getReader();
