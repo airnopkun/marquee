@@ -18,11 +18,6 @@ export default (props) => {
 			navigate("/");
 		}
 		console.log(userID);
-		// fetch(`http://localhost:3001/profile/${userID}`, {
-		//    method: 'get',
-		//    headers: {'Content-Type': 'application/json'},
-		// })
-		// .then(response => response.json())
 		axios.get(`http://localhost:3001/profile/${userID}`)
 			.then(response => {
 				console.log(response)
@@ -34,7 +29,6 @@ export default (props) => {
 					const userBooks = []
 					console.log(response);
 					response.data.forEach(bk => {
-						// const content = JSON.parse(bk.content);
 						const content = bk.content;
 						console.log(content);
 						userBooks.push({title: bk.title, content: content});
@@ -50,15 +44,6 @@ export default (props) => {
 		const formData = new FormData();
 		formData.append('', file);
 
-		// fetch('http://localhost:5000/conversion', {
-		// 	mode: 'cors',
-		// 	method: 'post',
-		// 	headers: {
-		// 		'Accept': 'application/json',
-		// 		'Access-Control-Allow-Origin': 'http://localhost:3000'
-		// 	},
-		// 	body: formData
-		// })
 		axios.post('http://localhost:5000/conversion', formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data'
@@ -66,72 +51,17 @@ export default (props) => {
 		})
 			.then(response => {
 				const paragraphs = response.data.body;
-				const bookForm = new FormData();
-				bookForm.append('user_id', userID);
-				bookForm.append('title', title);
-				paragraphs.forEach((p) => {
-					bookForm.append('content', p)
-				})
-				// bookForm.append('content', paragraphs);
-				bookForm.append('author', "")
-				console.log(paragraphs)
-				axios.post('http://localhost:3001/addbook', bookForm)
-				// axios({
-				// 	method: 'post',
-				// 	url: 'http://localhost:3001/addbook',
-				// 	data: {
-				// 		user_id: userID,
-				// 		title: title,
-				// 		content: paragraphs,
-				// 		author: ""
-				// 	}
-				// })
+				const book = {
+					"user_id": userID,
+					"title": title,
+					"content": paragraphs,
+					"author": ""
+				}
+				axios.post('http://localhost:3001/addbook', book)
 			})
-			// .then(response => {
-			// 	const reader = response.data.body.getReader();
-			// 	return new ReadableStream({
-			// 		start(controller) {
-			// 			return pump();
-			// 			function pump() {
-			// 				return reader.read().then(({ done, value }) => {
-			// 					// When no more data needs to be consumed, close the stream
-			// 					if (done) {
-			// 						controller.close();
-			// 						return;
-			// 					}
-			// 					// Enqueue the next data chunk into our target stream
-			// 					controller.enqueue(value);
-			// 					return pump();
-			// 				});
-			// 			}
-			// 		}
-			// 	})
-			// })
-			// .then(stream => new Response(stream))
-			// 	.then(response => response.blob())
-			// 		.then(blob => {
-			// 			blob.text()
-			// 				.then(text => {
-			// 					let content = text.slice(1, -1);
-			// 					let contentArr = content.split(`\\\\r\\\\n'",`);
-			// 					for(let i=0; i<contentArr.length; i++){
-			// 						contentArr[i] = contentArr[i].slice(5, contentArr[i].length);
-			// 					}
-			// 					console.log(content);
-			// 					console.log(contentArr);
-			// 					fetch('http://localhost:3001/addbook', {
-			// 						method: 'post',
-			// 						headers: {'Content-Type': 'application/json'},
-			// 						body: JSON.stringify({
-			// 							user_id: userID,
-			// 							title: title,
-			// 							content: contentArr,
-			// 							author: ""
-			// 						})
-			// 					}).then(book => setBooks([...books, book]))
-			// 						.catch(err => console.log(err))
-			// 				})
-			// 		})
+			.then(response => {
+				console.log(response)
+			})
 		}
 	const openModal = () => {
 		modalRef.current.openModal()

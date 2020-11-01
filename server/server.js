@@ -119,21 +119,21 @@ app.get('/profile/:user_id', (req, res) => {
 });
 
 app.post('/addbook', (req, res) => {
-	console.log("req: \n", req)
-	console.log("req.body: \n", req.body)
-	// const { user_id, title, content, author } = req.body;
-	// db('books')
-	// 	.insert({
-	//   		user_id: user_id,
-	//   		title: title,
-	//   		content: content,
-	//   		author: author,
-	// 		// created_at: new Date().getTime(),
-	//   		// updated_at: new Date().getTime()
-	//   	}).then(book => {
-	//   		res.json(book);
-	//   	})
-	//   	.catch(err => res.status(400).json(err))
+	// console.log("req: \n", req)
+	// console.log("req.body: \n", req.body)
+	const { user_id, title, content, author } = req.body;
+	db('books')
+		.insert({
+	  		user_id: user_id,
+	  		title: title,
+	  		content: content,
+	  		author: author,
+			// created_at: new Date().getTime(),
+	  		// updated_at: new Date().getTime()
+	  	}).then(book => {
+	  		res.json(book);
+	  	})
+	  	.catch(err => res.status(400).json(err))
 });
 
 app.delete('/deletebook/', (req, res) => {
