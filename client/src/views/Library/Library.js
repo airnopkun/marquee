@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Library.css';
 import Empty from '../../components/Empty/Empty';
-// import DragAndDrop from '../../components/DragAndDrop/DragAndDrop';
+import DragAndDrop from '../../components/DragAndDrop/DragAndDrop';
 import Modal from '../../components/Modal/Modal';
 import TextCrawl from '../TextCrawl/TextCrawl'
 import { navigate } from "@reach/router";
@@ -36,7 +36,7 @@ export default (props) => {
 				setBooks(userBooks);
 				}
 			})
-	}, [books])
+	}, [])
 
 	const handleFiles = (fileInput) => {
 		let file = fileInput.current.files[0];
@@ -96,11 +96,11 @@ export default (props) => {
 			: (
 				<div>
 					<HamburgerMenu />
-					{/*<DragAndDrop handleDrop={handleFiles}>*/}
+					<DragAndDrop handleDrop={handleFiles}>
 						<div>
 							<span id='card-container'>{cards}</span>
 						</div>
-					{/*</DragAndDrop>*/}
+					</DragAndDrop>
 				</div>
 
 			)

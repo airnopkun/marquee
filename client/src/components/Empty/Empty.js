@@ -6,13 +6,6 @@ import { navigate } from "@reach/router";
 export default (props) => {
 	const { userID, handleFiles } = props;
 	let fileInput = React.createRef();
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		id: this.props.id
-	// 	};
-	// 	this.fileInput = React.createRef();
-	// }
 	useEffect(() => {
 		if(userID === null){
 			navigate("/");
