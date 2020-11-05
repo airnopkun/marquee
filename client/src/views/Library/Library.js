@@ -39,7 +39,8 @@ export default (props) => {
 	}, [])
 
 	const handleFiles = (fileInput) => {
-		let file = fileInput.current.files[0];
+		let file = fileInput;
+		console.log(file);
 		const title = file.name.slice(0, -4);
 		const formData = new FormData();
 		formData.append('', file);

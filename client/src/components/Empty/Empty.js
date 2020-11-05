@@ -106,7 +106,7 @@ export default (props) => {
 						id="fileElem"
 						multiple
 						accept=".txt"
-						onChange={() => handleFiles(fileInput)}
+						onChange={() => handleFiles(fileInput.current.files[0])}
 					/>
 					<label className="button" htmlFor="fileElem">Select files</label>
 				</form>

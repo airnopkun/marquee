@@ -119,7 +119,6 @@ const particleParams = {
 }
 
 function App() {
-	// const [route, setRoute] = useState("");
 	const [userID, setUserID] = useState(null);
 	const [bookID, setBookID] = useState(null);
 
@@ -135,11 +134,8 @@ function App() {
 		setBookID(bookID);
 	}
 
-	// const onRouteChange = (route) => {
-	// 	setRoute(route);
-	// }
 	return (
-		<div className={"App"}>
+		<div id={"app"}>
 			<Particles className={"particles"} params={particleParams} />
 			<Router>
 				<SignIn onUserIDChange={onUserIDChange} path={"/"} />
@@ -150,29 +146,6 @@ function App() {
 				{/*<Profile />*/}
 			</Router>
 		</div>
-		// <div className="App">
-		// 	<Particles
-		// 		className="particles"
-		// 	params={particleParams}
-		// 	/>
-		// 	{ route === 'home'
-		// 		? 	<div className='outer-wrapper'>
-		// 				<HamburgerMenu onRouteChange={onRouteChange} className="hamburger" />
-		// 				<div className='inner-wrapper'>
-		// 					<Library className="library" id={userID}/>
-		// 				</div>
-		// 			</div>
-		// 		: (
-		// 			route === 'signin'
-		// 			? <SignIn onRouteChange={onRouteChange} onIDChange={onIDChange}/>
-		// 			: <Register onRouteChange={onRouteChange} onIDChange={onIDChange}/>
-		// 		)
-		// 	}
-		// 	{/*<Book />
-		// 	  <Marquee />
-		// 	  <Settings />
-		// 	  </header>*/}
-		// </div>
 	);
 }
 

@@ -1,4 +1,4 @@
-.App {
+#app {
 	text-align: center;
 	justify-content: left;
 }
@@ -12,7 +12,10 @@
 	z-index: -1;
 }
 
-html,
+/*html, body, #app, #app>div {*/
+/*	height: 100%;*/
+/*}*/
+
 .outer-wrapper {
 	margin: 0;
 	padding: 0;
